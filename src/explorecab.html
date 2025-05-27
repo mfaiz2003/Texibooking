@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="./output.css" rel="stylesheet">
+  <script src="./script.js"></script>
+  <title>Document</title>
+</head>
+<body>
+   
+  <div class="max-w-4xl mx-auto bg-white rounded-lg  p-6 mt-10">
+    <h1 class="text-3xl font-bold text-center mb-6 text-blue-600 shadow-lg shadow-blue-400 w-fit">Explore Available Cabs</h1>
+
+    <!-- Ride Details -->
+    <div class="bg-blue-50 p-4 rounded-lg mb-6 w-full max-w-md mx-auto text-center border shadow-lg">
+      <h2 class="text-xl font-semibold mb-2 text-blue-800">Your Ride Details</h2>
+      <p><span class="font-medium">Name:</span> <span id="user-name" class="text-gray-700"></span></p>
+      <p><span class="font-medium">Pickup:</span> <span id="pickup" class="text-gray-700"></span></p>
+      <p><span class="font-medium">Drop:</span> <span id="drop" class="text-gray-700"></span></p>
+      <p><span class="font-medium">Time:</span> <span id="time" class="text-gray-700"></span></p>
+      <p><span class="font-medium">Date:</span> <span id="date" class="text-gray-700"></span></p>
+      <p><span class="font-medium">Fare:</span> <span id="fare" class="text-gray-700"></span></p>
+    </div>
+
+    <!-- Cab Options -->
+    <div class="flex justify-evenly cab-options mt-6 gap-10">
+      <!-- Mini Cab -->
+      <div class="bg-white rounded-lg p-4 border border-gray-200 shadow-lg flex flex-col justify-between w-1/3">
+        <h3 class="text-lg font-semibold mb-2 text-purple-700">Mini Cab</h3>
+        <img src="e.pic3.jpeg" alt="pic3">
+        <p class="text-sm mb-4 text-gray-600">Best for 2-3 passengers. Affordable and fast.</p>
+        <p class="text-sm text-gray-700 font-semibold" id="mini-price">Fare:</p>
+        <button onclick="bookRide('Mini')" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md w-full">Book Mini</button>
+      </div>
+
+      <!-- Sedan Cab -->
+      <div class="bg-white rounded-lg p-4 border border-gray-200 shadow-lg flex flex-col justify-between w-1/3">
+        <h3 class="text-lg font-semibold mb-2 text-green-700">Sedan Cab</h3>
+        <img src="e.pic1.jpeg" alt="pic1">
+        <p class="text-sm mb-4 text-gray-600">Comfortable for 3-4 passengers with luggage.</p>
+        <p class="text-sm text-gray-700 font-semibold" id="sedan-price">Fare: ₹0</p>
+        <button onclick="bookRide('Sedan')" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md w-full">Book Sedan</button>
+      </div>
+
+      <!-- SUV Cab -->
+      <div class="bg-white shadow-lg rounded-lg p-4 border border-gray-200 flex flex-col justify-between w-1/3">
+        <h3 class="text-lg font-semibold mb-2 text-red-700">SUV Cab</h3>
+        <img src="e.pic2.jpeg" alt="pic2">
+        <p class="text-sm mb-4 text-gray-600">Spacious and perfect for families or groups.</p>
+        <p class="text-sm text-gray-700 font-semibold" id="suv-price">Fare: ₹0</p>
+        <button onclick="bookRide('SUV')" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md w-full">Book SUV</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Script for logic -->
+  <script>
+   document.addEventListener('DOMContentLoaded', function () {
+    const allowedRoutes = [
+        { pickup: "New Delhi, DL, India", drop: "Noida, Dadri, UP, India", price: { mini: 300, sedan: 500, suv: 800 }},
+        { pickup: "Mumbai, MH, India", drop: "Pune, MH, India", price: { mini: 3200, sedan: 4360, suv: 6780 } },
+        { pickup: "Jaipur, RJ, India", drop: "Ajmer, RJ, India", price: { mini: 2670, sedan: 3120, suv: 4211 } },
+        { pickup: "New Delhi, DL, India", drop: "Bareilly, UP, India", price: { mini: 2520, sedan: 4321, suv: 5232 } },
+        { pickup: "Lucknow, UP, India", drop: "Bareilly, UP, India", price: { mini: 2454, sedan: 3900, suv: 4957 } },
+        { pickup: "Bareilly, UP, India", drop: "Gorakhpur, UP, India", price: { mini: 5067, sedan: 7006, suv: 7500 } },
+        { pickup: "New Delhi, DL, India", drop: "Chandigarh", price: { mini: 3120, sedan: 3875, suv: 4700 } },
+        { pickup: "Mumbai, MH, India", drop: "Nashik, MH, India", price: { mini: 3122, sedan: 4532, suv: 5576 } },
+        { pickup: "Bareilly, UP, India", drop: "New Delhi, DL, India", price: { mini: 2652, sedan: 3950, suv: 5344 } },
+        { pickup: "Lucknow, UP, India", drop: "Patna, BR, India",price: { mini: 4700, sedan: 6789, suv: 8907 } },
+        { pickup: "Noida, Dadri, UP, India", drop: "Gurugram, HR, India", price: { mini: 654, sedan: 1165, suv: 1892 } },
+        { pickup: "Ghaziabad", drop: "Moradabad", price: { mini: 1456, sedan: 1786, suv: 2256 }}
+    ];
+
+    function normalizePlace(str) {
+        return str.toLowerCase().trim().split(",")[0];
+    }
+
+    const pickup = localStorage.getItem('pickup');
+    const drop = localStorage.getItem('drop');
+    const time = localStorage.getItem('time');
+    const date = localStorage.getItem('date');
+    const fullname = localStorage.getItem('fullname');
+
+    if (!pickup || !drop || !time || !date) {
+        alert("Please fill the ride form first.");
+        window.location.href = "input.html";
+        return;
+    }
+
+    
+   // Fetch ride details from backend
+   const userId = localStorage.getItem("userId");
+    fetch(`http://localhost:5000/api/rides/${userId}`)
+        .then(res => res.json())
+        .then(data => {
+            if (data.rides && data.rides.length > 0) {
+                const ride = data.rides[0]; // Assume the first ride, you can loop through if multiple rides exist
+                document.getElementById('user-name').innerText = fullname;
+                document.getElementById('pickup').innerText = pickup;
+                document.getElementById('drop').innerText = drop;
+                document.getElementById('time').innerText = time;
+                document.getElementById('date').innerText = date;
+                document.getElementById('fare').innerText = `₹${ride.fare}`; // Display fare from the ride data
+            }
+            else{
+                console.log("data not stored");
+                
+            }
+        })
+        .catch(err => {
+            console.error('Error fetching ride details:', err);
+        });
+
+
+    const userPickup = normalizePlace(pickup);
+    const userDrop = normalizePlace(drop);
+
+    const matchedRoute = allowedRoutes.find(route =>
+        normalizePlace(route.pickup) === userPickup &&
+        normalizePlace(route.drop) === userDrop
+    );
+
+    if (!matchedRoute) {
+        document.querySelector(".cab-options").innerHTML = `
+            <div class="text-center text-red-600 font-bold text-xl col-span-full">No Service Available for this Route</div>
+        `;
+        document.getElementById('fare').innerText = "N/A";
+        return;
+    }
+
+    if (matchedRoute.price) {
+        document.getElementById('fare').innerText = `${matchedRoute.price.mini}`;
+        document.getElementById('mini-price').innerText = `Fare: ₹${matchedRoute.price.mini}`;
+        document.getElementById('sedan-price').innerText = `Fare: ₹${matchedRoute.price.sedan}`;
+        document.getElementById('suv-price').innerText = `Fare: ₹${matchedRoute.price.suv}`;
+    } else {
+        document.getElementById('fare').innerText = "N/A";
+    }
+
+    window.bookRide = function (cabType) {
+        const userId = localStorage.getItem("userId");
+        if (!userId) {
+            alert("You must be logged in to book a ride.");
+            window.location.href = "login.html";
+            return;
+        }
+
+        // Select the correct price for the chosen cab
+        const selectedCabPrice = matchedRoute.price ? matchedRoute.price[cabType.toLowerCase()] : 0;
+
+        // Update the fare for selected cab type in the ride details
+        document.getElementById('fare').innerText = `₹${selectedCabPrice}`;
+
+        // Send ride booking request
+        fetch("http://localhost:5000/api/rides", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ userId, pickup, drop, time, date, cabType, fare: selectedCabPrice })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.rideId) {
+                alert("Ride booked successfully!");
+                window.location.href = "input.html"; // Redirect back to ride input form
+            } else {
+                alert("Booked Successfully");
+                 window.location.href = "input.html";
+            }
+        })
+        .catch(err => {
+            console.error("Error booking ride:", err);
+            alert("Error booking ride.");
+        });
+    }
+});
+
+
+  </script>
+   
+
+</body>
+</html>

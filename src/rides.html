@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Rides</title>
+  <script src="./script.js"></script>
+  <link href="./output.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+   <img src="r.oic2.jpg" alt="pic2" class="w-1/2 h-fit opacity-20">
+  <div class="absolute max-w-2xl bg-white shadow-lg rounded-xl p-6 px-20">
+    <h2 class=" flex text-2xl font-bold mb-4 text-center">Your Ride History</h2>
+    <ul id="ride-list" class="space-y-4"></ul>
+    <p id="no-rides" class="text-center text-gray-500 hidden">No rides found.</p>
+  </div>
+
+  <script>
+    const userId = localStorage.getItem("userId");
+    if (!userId) {
+      alert("Please log in to view your rides.");
+      window.location.href = "login.html"; // or your login page
+    }
+
+    fetch(`http://localhost:5000/api/rides/${userId}`)
+      .then(res => res.json())
+      .then(data => {
+        const rideList = document.getElementById("ride-list");
+        const noRides = document.getElementById("no-rides");
+
+        if (data.rides.length === 0) {
+          noRides.classList.remove("hidden");
+          return;
+        }
+
+        data.rides.forEach(ride => {
+          const li = document.createElement("li");
+          li.className = "border border-gray-300 rounded-lg p-4 shadow-sm bg-gray-50";
+          li.innerHTML = `
+            <div><strong>From:</strong> ${ride.pickup}</div>
+            <div><strong>To:</strong> ${ride.drop}</div>
+            <div><strong>Date:</strong> ${ride.date}</div>
+            <div><strong>Time:</strong> ${ride.time}</div>
+          `;
+          rideList.appendChild(li);
+        });
+      })
+      .catch(err => {
+        console.error("Error fetching rides:", err);
+        alert("Something went wrong. Please try again later.");
+      });
+  </script>
+
+</body>
+</html>

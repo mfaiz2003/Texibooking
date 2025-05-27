@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="./output.css" rel="stylesheet">
+    <script src="./script.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div class="relative w-full h-screen">
+        <img src="car10.avif" alt="car10" class="opacity-70 absolute top-0 left-0 h-full object-cover px-4 sm:px-10 md:px-20 lg:">
+  
+    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 
+    bg-white p-6 sm:p-8 rounded-2xl shadow-xl w-full max-w-sm sm:max-w-md">
+        <!-- Toggle Buttons -->
+        <div class="flex justify-center mb-6 space-x-4">
+          <button onclick="showLogin()" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Login</button>
+          <button onclick="showRegister()" class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">Register</button>
+        </div>
+    
+        <!-- Login Form -->
+        <form id="loginForm" action="/login" method="post" class="space-y-4 hidden">
+          <h2 class="text-2xl font-bold text-center">Login</h2>
+          <div>
+            <label class="block text-sm">Contact no</label>
+            <input type="tel" pattern="[0-9]{10}" class="w-full border px-4 py-2 rounded" name="contactno" required />
+          </div>
+          <div>
+            <label class="block text-sm">Password</label>
+            <input type="password" class="w-full border px-4 py-2 rounded" name="password" required />
+          </div>
+          <button type="submit"  class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">Login</button>
+        </form>
+    
+        <!-- Registration Form -->
+        <form id="registerForm" action="/signup" method="post"  class="space-y-4 hidden">
+          <h2 class="text-2xl font-bold text-center">Register</h2>
+          <div>
+            <label class="block text-sm">Full Name</label>
+            <input type="text" class="w-full border px-4 py-2 rounded" name="fullname" required />
+          </div>
+          <div>
+            <label class="block text-sm">Contact no</label>
+            <input type="tel" pattern="[0-9]{10}" class="w-full border px-4 py-2 rounded" name="contactno" required />
+          </div>
+          <div>
+            <label class="block text-sm">Password</label>
+            <input type="password" class="w-full border px-4 py-2 rounded" name="password" required />
+          </div>
+          <button type="submit" class="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700">Register</button>
+        </form>
+      </div>
+    </div>  
+    
+    <script>
+      function showLogin() {
+        document.getElementById('loginForm').classList.remove('hidden');
+        document.getElementById('registerForm').classList.add('hidden');
+      }
+    
+      function showRegister() {
+        document.getElementById('registerForm').classList.remove('hidden');
+        document.getElementById('loginForm').classList.add('hidden');
+      }
+    
+      // Signup handler
+      document.getElementById('registerForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+    
+        const formData = new FormData(e.target);
+        const data = {
+          fullname: formData.get('fullname'),
+          contactno: formData.get('contactno'),
+          password: formData.get('password')
+        };
+    
+        const response = await fetch('http://localhost:5000/signup', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+    
+        const result = await response.json();
+        alert(result.message || result.error);
+      });
+    
+      // Login handler
+      document.getElementById('loginForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+    
+        const formData = new FormData(e.target);
+        const data = {
+          contactno: formData.get('contactno'),
+          password: formData.get('password')
+        };
+    
+        const response = await fetch('http://localhost:5000/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+    
+        const result = await response.json();
+        if (response.ok) {
+          localStorage.setItem('fullname', result.user.fullname);
+          localStorage.setItem('userId', result.user._id)
+          alert("Login successful");
+          window.location.href = "input.html"; // ya jaha aap redirect karte ho
+        } else {
+          alert(result.error || "Login Failed");
+        }
+
+       
+      });
+
+    </script>
+    
+       
+</body>
+</html>
