@@ -9,8 +9,12 @@
 </head>
 <body>
    
-  <div class="max-w-4xl mx-auto bg-white rounded-lg  p-6 mt-10">
-    <h1 class="text-3xl font-bold text-center mb-6 text-blue-600 shadow-lg shadow-blue-400 w-fit">Explore Available Cabs</h1>
+  <div class="max-w-4xl mx-auto bg-white rounded-lg  p-6 ">
+    <div class="flex justify-center mb-6">
+  <h1 class="text-3xl font-bold text-blue-600 shadow-lg shadow-blue-400 inline-block">
+    Explore Available Cabs
+  </h1>
+</div>
 
     <!-- Ride Details -->
     <div class="bg-blue-50 p-4 rounded-lg mb-6 w-full max-w-md mx-auto text-center border shadow-lg">
@@ -24,9 +28,9 @@
     </div>
 
     <!-- Cab Options -->
-    <div class="flex justify-evenly cab-options mt-6 gap-10">
+    <div class="flex flex-col sm:flex-row cab-options mt-6 gap-10">
       <!-- Mini Cab -->
-      <div class="bg-white rounded-lg p-4 border border-gray-200 shadow-lg flex flex-col justify-between w-1/3">
+      <div class="bg-white rounded-lg p-4 border border-gray-200 shadow-lg flex flex-col justify-between md:w-full sm:w-1/3">
         <h3 class="text-lg font-semibold mb-2 text-purple-700">Mini Cab</h3>
         <img src="e.pic3.jpeg" alt="pic3">
         <p class="text-sm mb-4 text-gray-600">Best for 2-3 passengers. Affordable and fast.</p>
@@ -35,7 +39,7 @@
       </div>
 
       <!-- Sedan Cab -->
-      <div class="bg-white rounded-lg p-4 border border-gray-200 shadow-lg flex flex-col justify-between w-1/3">
+      <div class="bg-white rounded-lg p-4 border border-gray-200 shadow-lg flex flex-col justify-between md:w-full sm:w-1/3">
         <h3 class="text-lg font-semibold mb-2 text-green-700">Sedan Cab</h3>
         <img src="e.pic1.jpeg" alt="pic1">
         <p class="text-sm mb-4 text-gray-600">Comfortable for 3-4 passengers with luggage.</p>
@@ -44,7 +48,7 @@
       </div>
 
       <!-- SUV Cab -->
-      <div class="bg-white shadow-lg rounded-lg p-4 border border-gray-200 flex flex-col justify-between w-1/3">
+      <div class="bg-white shadow-lg rounded-lg p-4 border border-gray-200 flex flex-col justify-between md:w-full sm:w-1/3">
         <h3 class="text-lg font-semibold mb-2 text-red-700">SUV Cab</h3>
         <img src="e.pic2.jpeg" alt="pic2">
         <p class="text-sm mb-4 text-gray-600">Spacious and perfect for families or groups.</p>
