@@ -4,10 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="./output.css" rel="stylesheet">
-    <script src="./script.js"></script>
-   
-
-  
     <title>Document</title>
 </head>
 <body class="flex flex-co min-h-screen">
@@ -67,12 +63,12 @@
              </div>
             </form>
           </div>
-
           <script>
             const apiKey = "cc170f6629854acfaad32f404fbabde2";
           
             function setupAutocomplete(inputId) {
               const input = document.getElementById(inputId);
+
           
               input.addEventListener("input", () => {
                 const query = input.value.trim();
@@ -103,7 +99,12 @@
           
             setupAutocomplete("Pickup_Location");
             setupAutocomplete("Drop_Location");
+
+
+ 
+
           </script>
+
            
 
          <!-- box section -->
@@ -134,21 +135,36 @@
         <div>
           <h1 class=" relative justify-center text-center text-3xl text-blue-500 font-bold">WHATS A SAVAARI APART?</h1>
         </div>
+         
+        <div class="relative flex flex-col sm:flex-row flex-wrap justify-center items-center mt-10 bg-blue-400 py-5 max-w-7xl mx-auto rounded-3xl text-white px-4 gap-6">
+  
+  <!-- Item 1 -->
+  <div class="flex items-center gap-4 w-full sm:w-auto">
+    <img src="a.money.png" alt="money" class="w-16 h-16 rounded-full">
+    <span class="text-lg font-semibold">Transparent billing</span>
+  </div>
 
-        <div class="relative flex justify-evenly items-center mt-10 bg-blue-400 py-5 max-w-7xl mx-auto rounded-3xl text-white px-4 w flex-col sm:flex-row">
-          <p class="flex items-center gap-3">
-            <img src="a.money.png" alt="money" class="w-20 h-20 rounded-full">
-          Transparent billing</p>
+  <!-- Item 2 -->
+  <div class="flex items-center gap-4 w-full sm:w-auto">
+    <img src="a.logo1.png" alt="logo1" class="w-16 h-16 rounded-full">
+    <span class="text-lg font-semibold">Clean and Hygienic Car</span>
+  </div>
 
-          <p class="flex items-center gap-3">
-            <img src="a.logo1.png" alt="logo1" class="w-20 h-20 rounded-full">Clean and Hygienic Car</p>
+  <!-- Item 3 -->
+  <div class="flex items-center gap-4 w-full sm:w-auto">
+    <img src="map1.jpeg" alt="map" class="w-16 h-16 rounded-full">
+    <span class="text-lg font-semibold">20+ Cities</span>
+  </div>
 
-          <p class="flex items-center gap-3">
-            <img src="a.map.jpeg" alt="map" class="w-20 h-20 rounded-full">20+ Cities</p>
+  <!-- Item 4 -->
+  <div class="flex items-center gap-4 w-full sm:w-auto">
+    <img src="a.driver.jpeg" alt="driver" class="w-16 h-16 rounded-full">
+    <span class="text-lg font-semibold">Expert Drivers</span>
+  </div>
+</div>
 
-          <p class="flex items-center gap-3">
-            <img src="a.driver.jpeg" alt="driver" class="w-20 h-20 rounded-full">Expert Drivers</p>
-        </div>
+
+
 
           <!-- service section -->
 
@@ -254,4 +270,5 @@
   </div>
 
 </body>
+<script src="./script.js"></script>
 </html>

@@ -24,5 +24,4 @@
     document.getElementById('time').value = time;
   }
 
-
- 
+  
